@@ -33,6 +33,26 @@ body {
   to { transform: translateY(-10vh); }
 }
 
+/* Balloons */
+.balloon {
+  position: fixed;
+  bottom: -80px;
+  font-size: 40px;
+  animation: balloonUp 6s linear forwards;
+  z-index: 4;
+}
+
+@keyframes balloonUp {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+
 .card {
   background: white;
   width: 100%;
@@ -66,7 +86,7 @@ h1 {
   margin-bottom: 14px;
 }
 
-/* 🔒 FORCE SIDE-BY-SIDE */
+/* Buttons */
 .buttons {
   display: flex;
   justify-content: center;
@@ -92,7 +112,7 @@ button {
 #no {
   background: #adb5bd;
   color: white;
-  position: static; /* 🔑 IMPORTANT */
+  position: static;
 }
 
 /* Popup */
@@ -162,7 +182,6 @@ const cuteMessages = [
 ];
 
 function moveNoButton() {
-  // activate escape mode ONLY now
   noBtn.style.position = "fixed";
 
   const x = Math.random() * (window.innerWidth - 120);
@@ -180,7 +199,23 @@ noBtn.addEventListener("touchstart", moveNoButton);
 
 yesBtn.addEventListener("click", () => {
   popup.style.display = "flex";
+  startBalloons();
 });
+
+function startBalloons() {
+  const emojis = ["🎈", "🎉", "💖"];
+  const interval = setInterval(() => {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    balloon.style.left = Math.random() * 100 + "vw";
+    balloon.style.fontSize = 30 + Math.random() * 20 + "px";
+    document.body.appendChild(balloon);
+    setTimeout(() => balloon.remove(), 6000);
+  }, 400);
+
+  setTimeout(() => clearInterval(interval), 6000);
+}
 
 // background hearts
 setInterval(() => {
@@ -195,3 +230,5 @@ setInterval(() => {
 
 </body>
 </html>
+
+
