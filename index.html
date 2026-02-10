@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Be My Valentine 💘</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 16px;
+}
+
+/* Floating background hearts */
+.bg-heart {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0.4;
+  animation: floatBg 8s linear infinite;
+}
+
+@keyframes floatBg {
+  from { transform: translateY(110vh); }
+  to { transform: translateY(-10vh); }
+}
+
+.card {
+  background: white;
+  width: 100%;
+  max-width: 360px;
+  padding: 28px 22px;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.2),
+    0 0 30px rgba(255,77,109,0.4);
+  position: relative;
+  z-index: 2;
+}
+
+h1 {
+  color: #ff4d6d;
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #ff8fab;
+  margin-bottom: 18px;
+}
+
+.message {
+  min-height: 22px;
+  font-size: 13px;
+  color: #ff6f91;
+  margin-bottom: 14px;
+}
+
+/* 🔒 FORCE SIDE-BY-SIDE */
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+button {
+  min-width: 90px;
+  padding: 12px 22px;
+  font-size: 16px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #adb5bd;
+  color: white;
+  position: static; /* 🔑 IMPORTANT */
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 26px;
+  text-align: center;
+  animation: pop 0.6s ease;
+  max-width: 300px;
+  box-shadow: 0 0 30px rgba(255,77,109,0.6);
+}
+
+@keyframes pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Will you be my Valentine? 💘</h1>
+  <div class="subtitle">I promise lots of love & smiles 💖</div>
+
+  <div class="message" id="message"></div>
+
+  <div class="buttons">
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 🥹</button>
+  </div>
+</div>
+
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h1>YAYYY 💕</h1>
+    <p>You just made my heart so happy ❤️</p>
+    <p>Happy Valentine’s, my love 💘</p>
+    <p style="font-size:26px;">💖 💕 💝 💘 💗</p>
+  </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const popup = document.getElementById("popup");
+const message = document.getElementById("message");
+
+const cuteMessages = [
+  "Aww… don’t break my heart 🥺",
+  "Hey! That’s not allowed 😢",
+  "Are you really sure? 💔",
+  "My heart says YES 💖",
+  "This button is shy 😅",
+  "Come on… you know you want to 💕"
+];
+
+function moveNoButton() {
+  // activate escape mode ONLY now
+  noBtn.style.position = "fixed";
+
+  const x = Math.random() * (window.innerWidth - 120);
+  const y = Math.random() * (window.innerHeight - 120);
+
+  noBtn.style.left = x + "px";
+  noBtn.style.top = y + "px";
+
+  message.innerText =
+    cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
+}
+
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+yesBtn.addEventListener("click", () => {
+  popup.style.display = "flex";
+});
+
+// background hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "bg-heart";
+  heart.innerText = "💖";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 8000);
+}, 600);
+</script>
+
+</body>
+</html>
